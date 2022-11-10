@@ -1,21 +1,32 @@
-// Write your code here
-import './index.css'
 import {Component} from 'react'
 
+import './index.css'
+
 class MatchCard extends Component {
+  getMatchStatusClassName = matchStatus => {
+    if (matchStatus === 'Won') {
+      return 'match-won'
+    }
+    return 'match-lost'
+  }
+
   render() {
     const {matchData} = this.props
-    const {result, competingTeam, competingTeamLogo, matchStatus} = matchData
+    const {competingTeamLogo, competingTeam, matchStatus, result} = matchData
+    const matchStatusClassName = `match-status ${this.getMatchStatusClassName(
+      matchStatus,
+    )}`
+
     return (
-      <li className={`match-card ${matchStatus}`}>
+      <li className="match-card">
         <img
-          className="match-card-logo"
           src={competingTeamLogo}
-          alt={competingTeam}
+          className="competing-team-logo"
+          alt={`competing team ${competingTeam}`}
         />
-        <h1 className="match-card-name">{competingTeam}</h1>
-        <p className="match-card-result">{result}</p>
-        <p className="match-status">{matchStatus}</p>
+        <p className="competing-team-name">{competingTeam}</p>
+        <p className="result">{result}</p>
+        <p className={matchStatusClassName}>{matchStatus}</p>
       </li>
     )
   }
